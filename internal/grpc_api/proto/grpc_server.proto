@@ -1,0 +1,119 @@
+syntax = "proto3";
+
+package pb;
+option go_package = "./;pb";
+import "google/protobuf/timestamp.proto";
+
+service TaskManagerService {
+  // Создание новой задачи
+  rpc CreateTask (CreateTaskRequest) returns (CreateTaskResponse) {}
+  // Получение задачи по ID
+  rpc GetTask (GetTaskRequest) returns (GetTaskResponse) {}
+  // Получение списка всех задач
+  rpc ListTask (Empty) returns (ListTaskResponse) {}
+  // Обновление задачи по ID
+  rpc UpdateTask (UpdateTaskRequest) returns (UpdateTaskResponse) {}
+  // Удаление задачи по ID
+  rpc DeleteTask (DeleteTaskRequest) returns (DeleteTaskResponse) {}
+
+  // Создание нового проекта
+  rpc CreateProject (CreateProjectRequest) returns (CreateProjectResponse) {}
+  // Получение проекта по ID
+  rpc GetProject (GetProjectRequest) returns (GetProjectResponse) {}
+  // Получение списка всех проектов
+  rpc ListProject (Empty) returns (ListProjectResponse) {}
+  // Обновление проекта по ID
+  rpc UpdateProject (UpdateProjectRequest) returns (UpdateProjectResponse) {}
+  // Удаление проекта по ID
+  rpc DeleteProject (DeleteProjectRequest) returns (DeleteProjectResponse) {}
+}
+
+message Task {
+  int64 id = 1;
+  string name = 2;
+  int64 project_id = 3;
+  google.protobuf.Timestamp created_at = 4;
+  google.protobuf.Timestamp updated_at = 5;
+}
+
+message Project {
+  int64 id = 1;
+  string name = 2;
+  google.protobuf.Timestamp created_at = 3;
+  google.protobuf.Timestamp updated_at = 4;
+}
+
+message Empty {}
+
+message CreateTaskRequest {
+  string name = 1;
+  int64 project_id = 2;
+}
+
+message CreateTaskResponse {
+  int64 id = 1;
+}
+
+message UpdateTaskRequest {
+  Task task = 1;
+}
+
+message UpdateTaskResponse {
+  bool ok = 1;
+}
+
+message GetTaskRequest {
+  int64 id = 1;
+}
+
+message GetTaskResponse {
+  Task task = 1;
+}
+
+message ListTaskResponse {
+  repeated Task tasks = 1;
+}
+
+message DeleteTaskRequest {
+  uint32 id = 1;
+}
+
+message DeleteTaskResponse {
+  bool ok = 1;
+}
+
+message CreateProjectRequest {
+  string name = 1;
+}
+
+message CreateProjectResponse {
+  int64 id = 1;
+}
+
+message UpdateProjectRequest {
+  Project project = 1;
+}
+
+message UpdateProjectResponse {
+  bool ok = 1;
+}
+
+message GetProjectRequest {
+  int64 id = 1;
+}
+
+message GetProjectResponse {
+  Project project = 1;
+}
+
+message ListProjectResponse {
+  repeated Project projects = 1;
+}
+
+message DeleteProjectRequest {
+  uint32 id = 1;
+}
+
+message DeleteProjectResponse {
+  bool ok = 1;
+}
